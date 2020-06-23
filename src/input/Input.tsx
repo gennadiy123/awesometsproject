@@ -4,15 +4,13 @@ import {
   TouchableOpacity,
   Text,
   View,
-  FlatList,
-  Image,
   Alert,
-  Keyboard
+  Keyboard,
 } from 'react-native';
 import {styles} from './Input.styles';
 import {ObjectItem} from '../redux/Types';
-import {Modal} from '../modal/Modal'
-
+import {Modal} from '../modal/Modal';
+import {Tasks} from '../tasks/Tasks';
 
 export function Input() {
   const [taskArray, setTaskArray] = useState<Array<ObjectItem>>([]);
@@ -55,13 +53,22 @@ export function Input() {
       ]);
       setModalObject(null);
       setOpen(false);
-
     }
   };
 
   const modalProps = {
-    open, modalText, setModalText, saveTextModal, value
-  }
+    open,
+    modalText,
+    setModalText,
+    saveTextModal,
+    value,
+  };
+
+  const taskProps = {
+    taskArray,
+    handleClick,
+    delTask,
+  };
 
   return (
     <View style={styles.view}>
@@ -75,26 +82,8 @@ export function Input() {
         <Text style={styles.text}>Enter</Text>
       </TouchableOpacity>
       <View>
-        <Modal {...modalProps}/>
-        <FlatList
-          keyExtractor={(item) => item.id.toString()}
-          data={taskArray}
-          renderItem={({item}) => (
-            <View style={styles.arrayText}>
-              <View>
-                <TouchableOpacity onPress={() => handleClick(item)}>
-                  <Text style={styles.array}>{item.task}</Text>
-                </TouchableOpacity>
-              </View>
-              <TouchableOpacity onPress={() => delTask(item.id)}>
-                <Image
-                  style={styles.closeButton}
-                  source={require('../img/close.png')}
-                />
-              </TouchableOpacity>
-            </View>
-          )}
-        />
+        <Modal {...modalProps} />
+        <Tasks {...taskProps} />
       </View>
     </View>
   );

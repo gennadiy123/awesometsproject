@@ -27,23 +27,4 @@ export const styles = StyleSheet.create({
   text: {
     fontSize: 26,
   },
-  array: {
-    color: 'aqua',
-    marginLeft: 8,
-    marginBottom: 10,
-    fontSize: 20,
-    textAlign: 'left',
-    width: 400,
-  },
-  arrayText: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginRight: 5,
-  },
-  closeButton: {
-    width: 24,
-    height: 24,
-    marginTop: 6,
-  }
 });
