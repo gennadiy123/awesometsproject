@@ -8,18 +8,19 @@ import {
   Image,
   Alert,
   Keyboard,
-  Modal,
 } from 'react-native';
 import {styles} from './Input.styles';
 import {ObjectItem} from '../redux/Types';
+import {Modal} from '../modal/Modal';
 
 export function Input() {
-  const [array, setArray] = useState<Array<ObjectItem>>([]);
+  const [taskArray, setTaskArray] = useState<Array<ObjectItem>>([]);
   const [value, setValue] = useState<string>('');
   const [modalObject, setModalObject] = useState<ObjectItem | null>(null);
   const [modalText, setModalText] = useState<string>(
     modalObject ? modalObject.task : '',
   );
+  const [open, setOpen] = useState<boolean>(false);
 
   console.log('modalObject', modalObject);
   console.log('modalText', modalText);
@@ -28,29 +29,39 @@ export function Input() {
     Keyboard.dismiss();
     !value
       ? Alert.alert('Type something')
-      : setArray([...array, {task: value, id: Date.now()}]);
+      : setTaskArray([...taskArray, {task: value, id: Date.now()}]);
     setValue('');
   };
+
   const delTask = (id: number): void => {
-    setArray([...array.filter((task) => task.id !== id)]);
+    setTaskArray([...taskArray.filter((task) => task.id !== id)]);
   };
 
   const handleClick = (item: ObjectItem): void => {
     if (item) {
       setModalText(item.task);
       setModalObject(item);
+      setOpen(true);
     }
   };
 
   const saveTextModal = (): void => {
     if (modalObject) {
-      setArray([
-        ...array.map((el) =>
+      setTaskArray([
+        ...taskArray.map((el) =>
           el.id === modalObject.id ? {...el, task: modalText} : el,
         ),
       ]);
       setModalObject(null);
+      setOpen(false);
     }
+  };
+
+  const modalProps = {
+    open,
+    modalText,
+    setModalText,
+    saveTextModal,
   };
 
   return (
@@ -65,22 +76,10 @@ export function Input() {
         <Text style={styles.text}>Enter</Text>
       </TouchableOpacity>
       <View>
-        <Modal animationType="slide" transparent={true} visible={!!modalObject}>
-          <View style={styles.modal}>
-            <TextInput
-              style={{borderRadius: 1, borderWidth: 1}}
-              value={modalText}
-              onChangeText={setModalText}
-            />
-
-            <TouchableOpacity onPress={() => saveTextModal()}>
-              <Text>close</Text>
-            </TouchableOpacity>
-          </View>
-        </Modal>
+        <Modal {...modalProps} />
         <FlatList
           keyExtractor={(item) => item.id.toString()}
-          data={array}
+          data={taskArray}
           renderItem={({item}) => (
             <View style={styles.arrayText}>
               <View>

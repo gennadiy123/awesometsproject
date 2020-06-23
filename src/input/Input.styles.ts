@@ -45,14 +45,5 @@ export const styles = StyleSheet.create({
     width: 24,
     height: 24,
     marginTop: 6,
-  },
-  modal: {
-    margin: 20,
-    marginTop: 200,
-    width: 400,
-    height: 100,
-    backgroundColor: "white",
-    borderRadius: 20,
-    alignItems: "center",
-  },
+  }
 });
