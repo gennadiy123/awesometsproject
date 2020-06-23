@@ -12,19 +12,20 @@ interface Props {
     open: boolean,
     modalText: string,
     setModalText: Function,
-    saveTextModal: Function
+    saveTextModal: Function,
+    value: string
 }
 
-export const Modal: React.FC<Props> = ({open, modalText, setModalText, saveTextModal}): JSX.Element => {
+export const Modal: React.FC<Props> = ({open, modalText, setModalText, saveTextModal, value}): JSX.Element => {
   return (
     <BaseModal animationType="slide" transparent={true} visible={open}>
       <View style={styles.modal}>
         <TextInput
-          style={{borderRadius: 1, borderWidth: 1}}
+          style={styles.textInput}
           value={modalText}
-          onChangeText={() => setModalText}
+          onChangeText={(value) => setModalText(value)}
         />
-        <TouchableOpacity onPress={() => saveTextModal()}>
+        <TouchableOpacity onPress={(value) => saveTextModal(value)}>
           <Text>close</Text>
         </TouchableOpacity>
       </View>

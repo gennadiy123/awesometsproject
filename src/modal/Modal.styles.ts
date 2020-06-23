@@ -10,4 +10,9 @@ export const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: 'center',
   },
+
+  textInput: {
+    borderRadius: 1,
+    borderWidth: 1
+  }
 });

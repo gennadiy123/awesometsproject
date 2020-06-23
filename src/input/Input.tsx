@@ -7,11 +7,12 @@ import {
   FlatList,
   Image,
   Alert,
-  Keyboard,
+  Keyboard
 } from 'react-native';
 import {styles} from './Input.styles';
 import {ObjectItem} from '../redux/Types';
-import {Modal} from '../modal/Modal';
+import {Modal} from '../modal/Modal'
+
 
 export function Input() {
   const [taskArray, setTaskArray] = useState<Array<ObjectItem>>([]);
@@ -54,15 +55,13 @@ export function Input() {
       ]);
       setModalObject(null);
       setOpen(false);
+
     }
   };
 
   const modalProps = {
-    open,
-    modalText,
-    setModalText,
-    saveTextModal,
-  };
+    open, modalText, setModalText, saveTextModal, value
+  }
 
   return (
     <View style={styles.view}>
@@ -76,7 +75,7 @@ export function Input() {
         <Text style={styles.text}>Enter</Text>
       </TouchableOpacity>
       <View>
-        <Modal {...modalProps} />
+        <Modal {...modalProps}/>
         <FlatList
           keyExtractor={(item) => item.id.toString()}
           data={taskArray}
